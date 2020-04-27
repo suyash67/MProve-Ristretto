@@ -173,27 +173,14 @@ mod tests {
 
         // generate secret keys
         let x_vec: Vec<Scalar> = (0..s).map(|_| Scalar::random(&mut rng)).collect();
-        
-        // let G: GE = ECPoint::generator();
-        // let label1 = BigInt::from(1);
-        // let hash1 = HSha512::create_hash(&[&label1]);
-        // let H = generate_random_point(&Converter::to_vec(&hash1));
 
         // G, H - curve points for generating outputs and key-images
         let G = constants::RISTRETTO_BASEPOINT_POINT;
         let H = RistrettoPoint::hash_from_bytes::<Sha512>(G.compress().as_bytes());
-
-        // let order = FE::q();
-        // let order_sq = BigInt::mod_mul(&order, &order, &order);
-        // let q_hash = HSha256::create_hash(&[&order]);
-        // let q_sq_hash = HSha256::create_hash(&[&order_sq]);
     
         // generate P_vec, C_vec
         let mut P_vec: Vec<RistrettoPoint> = (0..n)
             .map(|_| {
-                // let label_i = BigInt::from(i as u32) + q_hash.clone();
-                // let hash_i = HSha512::create_hash(&[&label_i]);
-                // generate_random_point(&Converter::to_vec(&hash_i))
                 RistrettoPoint::random(&mut rng)
             })
             .collect();
@@ -201,9 +188,6 @@ mod tests {
         // Select random commitments inclusing those owned by the exchange
         let mut C_vec_mut: Vec<RistrettoPoint> = (0..n)
             .map(|_| {
-                // let label_i = BigInt::from(i as u32) + q_sq_hash.clone();
-                // let hash_i = HSha512::create_hash(&[&label_i]);
-                // generate_random_point(&Converter::to_vec(&hash_i))
                 RistrettoPoint::random(&mut rng)
             })
             .collect();
@@ -243,7 +227,7 @@ mod tests {
             })
             .collect::<Vec<BigInt>>();            
         
-        // let _fg = ::flame::start_guard("test_mprove");
+        let _fg = ::flame::start_guard("test_mprove");
         
         println!("(n={}, s={})", n, s);
         let start = Instant::now();
