@@ -1,0 +1,374 @@
+[
+  {
+    "id": 140513041860352,
+    "name": "proofs::mprove::tests::sim_mprove",
+    "spans": [
+      {
+        "name": "sim_mprove",
+        "start_ns": 6732,
+        "end_ns": 63956060,
+        "delta": 63949328,
+        "depth": 0,
+        "children": [
+          {
+            "name": "test_mprove",
+            "start_ns": 6441047,
+            "end_ns": 63949622,
+            "delta": 57508575,
+            "depth": 1,
+            "children": [
+              {
+                "name": "initialize sig",
+                "start_ns": 6478905,
+                "end_ns": 6493385,
+                "delta": 14480,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "initialize sig",
+                "start_ns": 6495676,
+                "end_ns": 6498987,
+                "delta": 3311,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "gen RS",
+                "start_ns": 8018192,
+                "end_ns": 10928767,
+                "delta": 2910575,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "gen LSAG",
+                "start_ns": 10932387,
+                "end_ns": 21921032,
+                "delta": 10988645,
+                "depth": 2,
+                "children": [
+                  {
+                    "name": "I",
+                    "start_ns": 10934601,
+                    "end_ns": 12408144,
+                    "delta": 1473543,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L,R",
+                    "start_ns": 12501210,
+                    "end_ns": 16506283,
+                    "delta": 4005073,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L",
+                    "start_ns": 17213546,
+                    "end_ns": 19091602,
+                    "delta": 1878056,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 19094997,
+                    "end_ns": 19512623,
+                    "delta": 417626,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 19514342,
+                    "end_ns": 21611910,
+                    "delta": 2097568,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 21614900,
+                    "end_ns": 21887623,
+                    "delta": 272723,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  }
+                ],
+                "notes": []
+              },
+              {
+                "name": "gen RS",
+                "start_ns": 23437305,
+                "end_ns": 27020489,
+                "delta": 3583184,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "gen LSAG",
+                "start_ns": 27027021,
+                "end_ns": 36213515,
+                "delta": 9186494,
+                "depth": 2,
+                "children": [
+                  {
+                    "name": "I",
+                    "start_ns": 27030559,
+                    "end_ns": 28498670,
+                    "delta": 1468111,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L,R",
+                    "start_ns": 28594839,
+                    "end_ns": 32155817,
+                    "delta": 3560978,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L",
+                    "start_ns": 32692954,
+                    "end_ns": 34358596,
+                    "delta": 1665642,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 34363990,
+                    "end_ns": 34625002,
+                    "delta": 261012,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 34626494,
+                    "end_ns": 35961896,
+                    "delta": 1335402,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 35963276,
+                    "end_ns": 36168286,
+                    "delta": 205010,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  }
+                ],
+                "notes": []
+              },
+              {
+                "name": "ver RS",
+                "start_ns": 38771748,
+                "end_ns": 41800414,
+                "delta": 3028666,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "ver LSAG",
+                "start_ns": 41804026,
+                "end_ns": 49374208,
+                "delta": 7570182,
+                "depth": 2,
+                "children": [
+                  {
+                    "name": "L",
+                    "start_ns": 42182687,
+                    "end_ns": 43306627,
+                    "delta": 1123940,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 43308688,
+                    "end_ns": 43554580,
+                    "delta": 245892,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 43555197,
+                    "end_ns": 44841602,
+                    "delta": 1286405,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 44977915,
+                    "end_ns": 45028356,
+                    "delta": 50441,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L",
+                    "start_ns": 45029031,
+                    "end_ns": 46400961,
+                    "delta": 1371930,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 46407166,
+                    "end_ns": 46790086,
+                    "delta": 382920,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 46793551,
+                    "end_ns": 48994695,
+                    "delta": 2201144,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 49251611,
+                    "end_ns": 49363660,
+                    "delta": 112049,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  }
+                ],
+                "notes": []
+              },
+              {
+                "name": "ver RS",
+                "start_ns": 49385298,
+                "end_ns": 53993435,
+                "delta": 4608137,
+                "depth": 2,
+                "children": [],
+                "notes": []
+              },
+              {
+                "name": "ver LSAG",
+                "start_ns": 53999350,
+                "end_ns": 63887599,
+                "delta": 9888249,
+                "depth": 2,
+                "children": [
+                  {
+                    "name": "L",
+                    "start_ns": 54585737,
+                    "end_ns": 56100537,
+                    "delta": 1514800,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 56104588,
+                    "end_ns": 56528475,
+                    "delta": 423887,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 56529762,
+                    "end_ns": 58766669,
+                    "delta": 2236907,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 59022155,
+                    "end_ns": 59113056,
+                    "delta": 90901,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "L",
+                    "start_ns": 59114730,
+                    "end_ns": 60933301,
+                    "delta": 1818571,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "htp",
+                    "start_ns": 60935723,
+                    "end_ns": 61341025,
+                    "delta": 405302,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "R",
+                    "start_ns": 61342190,
+                    "end_ns": 63526912,
+                    "delta": 2184722,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  },
+                  {
+                    "name": "hts",
+                    "start_ns": 63767157,
+                    "end_ns": 63877275,
+                    "delta": 110118,
+                    "depth": 3,
+                    "children": [],
+                    "notes": []
+                  }
+                ],
+                "notes": []
+              }
+            ],
+            "notes": []
+          }
+        ],
+        "notes": []
+      }
+    ]
+  }
+]
