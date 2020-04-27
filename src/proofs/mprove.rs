@@ -243,7 +243,7 @@ mod tests {
             })
             .collect::<Vec<BigInt>>();            
         
-        let _fg = ::flame::start_guard("test_mprove");
+        // let _fg = ::flame::start_guard("test_mprove");
         
         println!("(n={}, s={})", n, s);
         let start = Instant::now();
@@ -264,8 +264,11 @@ mod tests {
         // test_mprove(20, 4);
         // test_mprove(20, 16);
         // test_mprove(100, 50);
-        // test_mprove(100, 80);
+        test_mprove(1000, 100);
+    }
 
+    #[test]
+    pub fn gen_profile(){
         let _fg = ::flame::start_guard("sim_mprove");
         test_mprove(2, 1);
         _fg.end();
