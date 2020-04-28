@@ -18,6 +18,7 @@ flame = "0.2.2"
 curve25519-dalek = "2.0.0"
 sha2 = "0.8.1"
 structopt = "0.2"
+sha3 = "0.8.2"
 
 [dev-dependencies]
 criterion = "0.2"

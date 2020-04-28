@@ -17,6 +17,9 @@ struct Opt {
 }
 
 fn main() {
+    // 
+    // cargo run --release --bin mprove_bin 1000 100 -n 10
+    //
     let opt = Opt::from_args();
 
     let num_iter = opt.num_iter;

@@ -16,6 +16,7 @@ extern crate rand;
 extern crate flame;
 extern crate curve25519_dalek;
 extern crate sha2;
+extern crate sha3;
 
 
 pub mod proofs;

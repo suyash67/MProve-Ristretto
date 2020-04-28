@@ -16,7 +16,8 @@ use curve25519_dalek::ristretto::{RistrettoPoint};
 use curve25519_dalek::traits::VartimeMultiscalarMul;
 use curve25519_dalek::scalar::Scalar;
 use curve25519_dalek::constants;
-use sha2::Sha512;
+// use sha2::Sha512;
+use sha3::Keccak512;
 
 
 #[derive(Clone, Debug)]
@@ -57,7 +58,7 @@ impl RingSig{
         tohash_vec.extend_from_slice(message.compress().as_bytes());
         tohash_vec.extend_from_slice(L_j.compress().as_bytes());
 
-        let mut c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec);
+        let mut c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec);
 
         // compute c0
         let mut j = (index + 1)%n;
@@ -78,7 +79,7 @@ impl RingSig{
             // compute c_old
             let idx = (n+1)*32;
             tohash_vec[idx..].copy_from_slice(L.compress().as_bytes());
-            c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec);
+            c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec);
             
             j = (j + 1) % n;
 
@@ -134,7 +135,7 @@ impl RingSig{
             let L = RistrettoPoint::vartime_double_scalar_mul_basepoint(&c_old, &pk[j], &self.s_vec[j]);
 
             tohash_vec[idx..].copy_from_slice(L.compress().as_bytes());
-            c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec);
+            c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec);
             j = j + 1;
         }
 
@@ -185,7 +186,7 @@ impl LSAGSig{
 
         // let _fgI = ::flame::start_guard("I");
         // compute key-image
-        let H_P_idx = RistrettoPoint::hash_from_bytes::<Sha512>(pk[index].compress().as_bytes());
+        let H_P_idx = RistrettoPoint::hash_from_bytes::<Keccak512>(pk[index].compress().as_bytes());
         let I = H_P_idx * x;
         // _fgI.end();
 
@@ -209,7 +210,7 @@ impl LSAGSig{
         tohash_vec.extend_from_slice(L_j.compress().as_bytes());
         tohash_vec.extend_from_slice(R_j.compress().as_bytes());
 
-        let mut c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec);        
+        let mut c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec);        
 
         // compute c0
         let mut j = (index + 1)%n;
@@ -233,7 +234,7 @@ impl LSAGSig{
             // _fgL.end();
 
             // let _fg0 = ::flame::start_guard("htp");
-            let H_P = RistrettoPoint::hash_from_bytes::<Sha512>(pk[j].compress().as_bytes());
+            let H_P = RistrettoPoint::hash_from_bytes::<Keccak512>(pk[j].compress().as_bytes());
             // _fg0.end();
 
             // compute R
@@ -249,7 +250,7 @@ impl LSAGSig{
             tohash_vec[idxL..idxR].copy_from_slice(L.compress().as_bytes());
             tohash_vec[idxR..].copy_from_slice(R.compress().as_bytes());
 
-            c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec); 
+            c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec); 
             j = (j + 1) % n;
             // _fg1.end();
 
@@ -314,7 +315,7 @@ impl LSAGSig{
 
             // compute Hash of pubkey
             // let _fg0 = ::flame::start_guard("htp");
-            let H_P = RistrettoPoint::hash_from_bytes::<Sha512>(pk[j].compress().as_bytes());
+            let H_P = RistrettoPoint::hash_from_bytes::<Keccak512>(pk[j].compress().as_bytes());
             // _fg0.end();
 
             // compute R
@@ -329,7 +330,7 @@ impl LSAGSig{
             tohash_vec[idxR..].copy_from_slice(R.compress().as_bytes());
           
             // let _fg1 = ::flame::start_guard("hts");
-            c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec); 
+            c_old = Scalar::hash_from_bytes::<Keccak512>(&tohash_vec); 
             // _fg1.end();
             
             j = j + 1;
