@@ -1,9 +1,9 @@
 extern crate structopt;
-extern crate mprove;
+extern crate mprove_ristretto;
 
 use structopt::StructOpt;
 use std::time::{Instant, Duration};
-use mprove::proofs::mprove::MProve;
+use mprove_ristretto::proofs::mprove::MProve;
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "mprove", about = "MProve proof generation simulator using Ristretto.")]

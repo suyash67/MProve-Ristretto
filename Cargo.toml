@@ -1,5 +1,5 @@
 [package]
-name = "mprove"
+name = "mprove-ristretto"
 version = "0.1.0"
 authors = [
     "Suyash Bagad <suyashbagad@iitb.ac.in>",
@@ -23,7 +23,3 @@ sha3 = "0.8.2"
 [dev-dependencies]
 criterion = "0.2"
 
-[[bench]]
-name = "mprove"
-path = "benches/mprove.rs"
-harness = false
