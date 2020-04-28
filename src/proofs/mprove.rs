@@ -10,8 +10,6 @@ This file is part of MProvelibrary
 */
 
 // based on the paper: <link to paper>
-use curv::arithmetic::traits::{Converter};
-use curv::BigInt;
 use Errors::{self, MProveError};
 use proofs::mprove_sigs::*;
 
@@ -40,7 +38,7 @@ impl MProve{
         P_vec: &[RistrettoPoint], // addresses in the ring (public keys)
         // witness
         x_vec: &[Scalar], // secret keys
-        E_vec: &[BigInt], // locations of exchange-owned keys
+        E_vec: &[u64], // locations of exchange-owned keys
     ) -> MProve {
 
         // ring size
@@ -57,11 +55,9 @@ impl MProve{
         let mut index: usize = 0;
         let C_res_vec: Vec<RistrettoPoint> = (0..n)
             .map(|i| {
-                let bignum_bit: BigInt = &E_vec[i].clone() & BigInt::one();
-                let byte = BigInt::to_vec(&bignum_bit);
-                if byte[0]==1 {
+                let bit: u64 = E_vec[i].clone() & 1u64;
+                if bit==1 {
                     // compute C_prime_i
-                    // let z_i = Scalar::random(&mut rng);
                     C_prime_vec[i] = G * z_vec[i];
 
                     // construct pk vectors
@@ -78,7 +74,6 @@ impl MProve{
                 }
                 else {
                     // compute C_prime_i
-                    // let z_i = ECScalar::new_random();
                     let C_primei_Ci = G * z_vec[i]; 
                     C_prime_vec[i] = C_primei_Ci + C_vec[i];
 
@@ -215,19 +210,19 @@ mod tests {
                         C_vec_mut[i as usize] = G * r_vec[index] + H * a_vec[index];
                         P_vec[i as usize] = G * x_vec[index];
                         index = index + 1;
-                        BigInt::one()
+                        1 as u64
                     }
                     else {
-                        BigInt::zero()
+                        0u64
                     }
                 }
                 else{
-                    BigInt::zero()
+                    0u64
                 }
             })
-            .collect::<Vec<BigInt>>();            
+            .collect::<Vec<u64>>();            
         
-        let _fg = ::flame::start_guard("test_mprove");
+        // let _fg = ::flame::start_guard("test_mprove");
         
         println!("(n={}, s={})", n, s);
         let start = Instant::now();

@@ -12,9 +12,7 @@ This file is part of mprove library
 extern crate serde_derive;
 extern crate serde;
 
-extern crate curv;
 extern crate rand;
-extern crate time;
 extern crate flame;
 extern crate curve25519_dalek;
 extern crate sha2;

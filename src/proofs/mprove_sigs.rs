@@ -33,7 +33,7 @@ impl RingSig{
         index: usize,
     ) -> RingSig {
 
-        let _fg = ::flame::start_guard("gen RS");
+        // let _fg = ::flame::start_guard("gen RS");
 
         // ring size
         let n = pk.len();
@@ -102,7 +102,7 @@ impl RingSig{
         pk: &[RistrettoPoint],
     ) -> Result<(), Errors> {
 
-        let _fg = ::flame::start_guard("ver RS");
+        // let _fg = ::flame::start_guard("ver RS");
         
         // ring size
         let n = pk.len();
@@ -147,7 +147,7 @@ impl RingSig{
 
     pub fn initialize(n: usize) -> RingSig {
 
-        let _fg = ::flame::start_guard("initialize sig");
+        // let _fg = ::flame::start_guard("initialize sig");
 
         // function to initialize a RingSig variable
         let s_vec = (0..n).map(|_| { Scalar::one()}).collect::<Vec<Scalar>>();
@@ -175,7 +175,7 @@ impl LSAGSig{
         index: usize,
     ) -> LSAGSig {
 
-        let _fg = ::flame::start_guard("gen LSAG");
+        // let _fg = ::flame::start_guard("gen LSAG");
 
         // ring size
         let n = pk.len();
@@ -183,22 +183,22 @@ impl LSAGSig{
         assert!(n >= 2, "Error! Why ring signature if cols = 1!");
         assert!(index < n, "Index out of range");
 
-        let _fgI = ::flame::start_guard("I");
+        // let _fgI = ::flame::start_guard("I");
         // compute key-image
         let H_P_idx = RistrettoPoint::hash_from_bytes::<Sha512>(pk[index].compress().as_bytes());
         let I = H_P_idx * x;
-        _fgI.end();
+        // _fgI.end();
 
         // Pick alpha and s_i \in {1,2,...,q-1}, i = 0,1,...,n-1
         let alpha = Scalar::random(&mut rng);
         let mut s_vec: Vec<_> = (0..n).map(|_| Scalar::random(&mut rng)).collect();
 
-        let _fgLR = ::flame::start_guard("L,R");
+        // let _fgLR = ::flame::start_guard("L,R");
         // Compute L_j and R_j
         let G = constants::RISTRETTO_BASEPOINT_POINT;
         let L_j = G * alpha;
         let R_j = H_P_idx * alpha;
-        _fgLR.end();
+        // _fgLR.end();
 
         // Construct a vector of EC points to hash
         let mut tohash_vec: Vec<u8> = Vec::new();
@@ -224,34 +224,34 @@ impl LSAGSig{
         while j != index {
 
             // compute L
-            let _fgL = ::flame::start_guard("L");
+            // let _fgL = ::flame::start_guard("L");
             s_vec[j] = Scalar::random(&mut rng);
             // let sG = G * s_vec[j];
             // let cpk_j = pk[j] * c_old;
             // let L = sG + cpk_j;
             let L = RistrettoPoint::vartime_double_scalar_mul_basepoint(&c_old, &pk[j], &s_vec[j]);
-            _fgL.end();
+            // _fgL.end();
 
-            let _fg0 = ::flame::start_guard("htp");
+            // let _fg0 = ::flame::start_guard("htp");
             let H_P = RistrettoPoint::hash_from_bytes::<Sha512>(pk[j].compress().as_bytes());
-            _fg0.end();
+            // _fg0.end();
 
             // compute R
-            let _fgR = ::flame::start_guard("R");
+            // let _fgR = ::flame::start_guard("R");
             // let sH = H_P * s_vec[j];
             // let cj_I = I * c_old;
             // let R = sH + cj_I;
             let R = RistrettoPoint::vartime_multiscalar_mul(&[s_vec[j], c_old], &[H_P, I]);
-            _fgR.end();
+            // _fgR.end();
 
             // compute next c
-            let _fg1 = ::flame::start_guard("hts");
+            // let _fg1 = ::flame::start_guard("hts");
             tohash_vec[idxL..idxR].copy_from_slice(L.compress().as_bytes());
             tohash_vec[idxR..].copy_from_slice(R.compress().as_bytes());
 
             c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec); 
             j = (j + 1) % n;
-            _fg1.end();
+            // _fg1.end();
 
             if j == 0 {
                 c = c_old;
@@ -274,7 +274,7 @@ impl LSAGSig{
         pk: &[RistrettoPoint],
     ) -> Result<(), Errors> {
 
-        let _fg = ::flame::start_guard("ver LSAG");
+        // let _fg = ::flame::start_guard("ver LSAG");
         
         // ring size
         let n = pk.len();
@@ -304,33 +304,33 @@ impl LSAGSig{
         let idxR = (n+2)*32;
         while j < n {
 
-            let _fgL = ::flame::start_guard("L");
+            // let _fgL = ::flame::start_guard("L");
             // compute L
             // let sG = G * self.s_vec[j];
             // let cpk_j = pk[j] * c_old;
             // let L = sG + cpk_j;
             let L = RistrettoPoint::vartime_double_scalar_mul_basepoint(&c_old, &pk[j], &self.s_vec[j]);
-            _fgL.end();
+            // _fgL.end();
 
             // compute Hash of pubkey
-            let _fg0 = ::flame::start_guard("htp");
+            // let _fg0 = ::flame::start_guard("htp");
             let H_P = RistrettoPoint::hash_from_bytes::<Sha512>(pk[j].compress().as_bytes());
-            _fg0.end();
+            // _fg0.end();
 
             // compute R
-            let _fgR = ::flame::start_guard("R");
+            // let _fgR = ::flame::start_guard("R");
             // let sH = H_P * self.s_vec[j];
             // let cj_I = self.I * c_old;
             // let R = sH + cj_I;
             let R = RistrettoPoint::vartime_multiscalar_mul(&[self.s_vec[j], c_old], &[H_P, self.I]);
-            _fgR.end();
+            // _fgR.end();
 
             tohash_vec[idxL..idxR].copy_from_slice(L.compress().as_bytes());
             tohash_vec[idxR..].copy_from_slice(R.compress().as_bytes());
           
-            let _fg1 = ::flame::start_guard("hts");
+            // let _fg1 = ::flame::start_guard("hts");
             c_old = Scalar::hash_from_bytes::<Sha512>(&tohash_vec); 
-            _fg1.end();
+            // _fg1.end();
             
             j = j + 1;
         }
