@@ -17,6 +17,13 @@ use curve25519_dalek::ristretto::{RistrettoPoint};
 use curve25519_dalek::traits::VartimeMultiscalarMul;
 use curve25519_dalek::scalar::Scalar;
 
+use std::cmp;
+use rand::distributions::{Distribution, Uniform};
+// use std::time::{Instant};
+use rand::Rng;
+use curve25519_dalek::constants;
+use sha2::Sha512;
+
 #[derive(Clone, Debug)]
 pub struct MProve {
     C_vec: Vec<RistrettoPoint>,
@@ -141,6 +148,79 @@ impl MProve{
             Err(MProveError)
         }
 
+    }
+
+    pub fn gen_params(n: usize, s: usize) -> (
+        RistrettoPoint, 
+        Vec<RistrettoPoint>,
+        Vec<RistrettoPoint>,
+        Vec<Scalar>,
+        Vec<u64>,) {
+                
+        // generate random amounts in range {0,..,2^{amt_bit_range}}
+        let mut rng = rand::thread_rng();
+        let a_vec: Vec<Scalar> = (0..s).map(|_| Scalar::from(rng.gen::<u32>())).collect();
+        
+        // generate blinding factors
+        let r_vec: Vec<Scalar> = (0..s).map(|_| Scalar::random(&mut rng)).collect();
+
+        // generate secret keys
+        let x_vec: Vec<Scalar> = (0..s).map(|_| Scalar::random(&mut rng)).collect();
+
+        // G, H - curve points for generating outputs and key-images
+        let G = constants::RISTRETTO_BASEPOINT_POINT;
+        let H = RistrettoPoint::hash_from_bytes::<Sha512>(G.compress().as_bytes());
+    
+        // generate P_vec, C_vec
+        let mut P_vec: Vec<RistrettoPoint> = (0..n)
+            .map(|_| {
+                RistrettoPoint::random(&mut rng)
+            })
+            .collect();
+
+        // Select random commitments inclusing those owned by the exchange
+        let mut C_vec_mut: Vec<RistrettoPoint> = (0..n)
+            .map(|_| {
+                RistrettoPoint::random(&mut rng)
+            })
+            .collect();
+        
+        // generate random index vector of size s
+        let setsize = n / s;
+        let mut start_idx = 0;
+        let mut end_idx = cmp::max(1, setsize-1);
+        let idx = (0..s).map(|_| {
+            
+            let dist1 = Uniform::from(start_idx..end_idx);
+            start_idx = setsize + start_idx;
+            end_idx =  cmp::min(n-1, end_idx + setsize);
+
+            dist1.sample(&mut rng)
+        })
+        .collect::<Vec<usize>>();
+
+        let mut index = 0;
+        let E_vec = (0..n)
+            .map(|i| {
+                if index < idx.len() {
+                    if i == idx[index] {
+                        // generate commitments using a_vec, r_vec
+                        C_vec_mut[i as usize] = G * r_vec[index] + H * a_vec[index];
+                        P_vec[i as usize] = G * x_vec[index];
+                        index = index + 1;
+                        1 as u64
+                    }
+                    else {
+                        0u64
+                    }
+                }
+                else{
+                    0u64
+                }
+            })
+            .collect::<Vec<u64>>();
+
+        (G, C_vec_mut, P_vec, x_vec, E_vec)
     }
 }
 
