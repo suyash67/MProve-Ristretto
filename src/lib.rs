@@ -8,6 +8,7 @@ This file is part of mprove library
 */
 
 // based on the paper: <link to paper>
+#[allow(unused_imports)]
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
